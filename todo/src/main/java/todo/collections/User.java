@@ -26,4 +26,9 @@ public class User {
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

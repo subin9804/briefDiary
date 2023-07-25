@@ -34,12 +34,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         // username에서 UserDetails를 가져와서 Authentication객체를 만들 것
         // setAuthentication메서드를 이용하여 SecurityContext 내부에 있는 현재의 UserDetails를 설정한다.
         try {
-            String jwt = parseJwt(request); // 요청에서 jwt를 파싱해서
+            String jwt = parseJwt(request);
             if(jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                // jwt에서 username을 가져온다
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
-                // userDetailsService에서 메서드를 이용하여 username으로 userDetails를 가져온 뒤
                 // UsernamePasswordAuthenticationToken은 추후 인증이 끝나고 SecurityContextHolder.getContext()에 등록될 Authentication의 구현체이다.
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
