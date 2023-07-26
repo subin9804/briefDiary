@@ -21,11 +21,15 @@ public class User {
     private String username;
 
     @NotBlank
-    @Size(max=50)
+    @Size(max=120)
     private String password;
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
+
+    public User() {
+
+    }
 
     public User(String username, String password) {
         this.username = username;

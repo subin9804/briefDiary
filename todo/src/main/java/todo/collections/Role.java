@@ -12,7 +12,11 @@ public class Role {
 
     private ERole name;
 
-    private Role(ERole name) {
+    public Role() {
+
+    }
+
+    public Role(ERole name) {
         this.name = name;
     }
 }

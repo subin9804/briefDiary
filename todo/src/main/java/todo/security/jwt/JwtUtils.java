@@ -20,18 +20,19 @@ public class JwtUtils {
     @Value("${todo.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("{todo.app.jwtExpirationMs}")
+    @Value("${todo.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
+
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(key(), SignatureAlgorithm.HS256)  // HS256알고리즘에 적합한 키를 이용하여 JWT를 서명하여
-                .compact(); // String 형태로 압축
+                .signWith(key(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     private Key key() {
