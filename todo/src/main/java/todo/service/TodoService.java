@@ -6,8 +6,6 @@ import todo.collections.Todo;
 import todo.payload.request.TodoRequest;
 import todo.repository.TodoRepository;
 
-import java.time.LocalDate;
-
 @Service
 @RequiredArgsConstructor
 public class TodoService {
@@ -18,10 +16,21 @@ public class TodoService {
 
         Todo todo = Todo.builder()
                 .user(user)
-                .date(LocalDate.now())
+                .date(request.getDate())
                 .checked(false)
                 .content(request.getContent())
                 .build();
+
+        return todoRepository.save(todo);
+    }
+
+    public Todo update(TodoRequest request, String id) {
+        Todo todo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Not exsist todo"));
+
+        todo.setId(request.getId());
+        todo.setDate(request.getDate());
+        todo.setChecked(request.isChecked());
+        todo.setContent(request.getContent());
 
         return todoRepository.save(todo);
     }

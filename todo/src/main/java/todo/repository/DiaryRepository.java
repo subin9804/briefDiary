@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface DiaryRepository extends MongoRepository<Diary, String> {
 
-    List<Diary> findAllByUser (String user);
+    List<Diary> findByUser (String user);
 
-    List<Diary> findAllByUserAndDate(String user, Date date);
+    Diary findByUserAndDate(String user, Date date);
 }
