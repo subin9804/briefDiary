@@ -37,7 +37,7 @@ public class TodoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedTodo);
     }
 
-    // todo 조회하기
+    // todo 날짜별 조회하기
     @GetMapping("/{date}")
     public ResponseEntity<List<TodoResponse>> todo(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, Principal principal) {
         String user = principal.getName();
