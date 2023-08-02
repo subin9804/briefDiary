@@ -21,7 +21,7 @@ export default function Signup() {
         try {
             e.preventDefault();
             setError(null);
-            await signUp(email, password, roles);
+            await signUp(email, password);
             console.log('테스트 성공')
 
             alert('welcome')
@@ -37,7 +37,6 @@ export default function Signup() {
         <div id="signUp">
             <form onSubmit={handleSubmit} className="w-96 p-4 mt-16 mx-auto text-center border border-green-400 border-8 px-8 pb-16 ">
                 <h1 className="font-bold text-4xl py-12">회원가입</h1>
-                {/* <input type="hidden" name="roles" id="roles" value="user"/> */}
                 <div className="pb-8">
                     <label className="w-full flex justify-between">
                         <span>이메일</span>

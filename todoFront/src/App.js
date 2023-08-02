@@ -8,6 +8,7 @@ import AuthProvider from './component/AuthProvider';
 import AuthContext from './component/AuthContext';
 import AuthRequired from './component/AuthRequired';
 
+
 function Index() {
   const {user} = useContext(AuthContext);
   if(!user) {

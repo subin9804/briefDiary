@@ -41,7 +41,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                 // UsernamePasswordAuthenticationToken은 추후 인증이 끝나고 SecurityContextHolder.getContext()에 등록될 Authentication의 구현체이다.
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
+                        userDetails.getAuthorities());
 
                 // authentication의 details에 WebAuthenticationDetails를 이용하여 값을 넣어주고
                 // 이 WebAuthenticationDetails는 WebAuthenticationDetailsSource가 생성한다.

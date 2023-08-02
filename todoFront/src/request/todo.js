@@ -5,7 +5,7 @@ export async function createTodo(todo) {
     const res = await fetch(`${api}/todos`, {
         method: "POST",
         headers: {
-            "Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).access_token,
+            "Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).token,
             "Content-Type" : "application/json"
         },
         body: JSON.stringify({todo})
@@ -19,10 +19,10 @@ export async function createTodo(todo) {
 }
 
 // todo 조회
-export async function getTodos() {
-    const res = await fetch(`${api}/todos`, {
+export async function getTodosAll() {
+    const res = await fetch(`${api}/todo`, {
         method: 'GET',
-        headers: {"Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).access_token}
+        headers: {"Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).token}
     })
 
     if(!res.ok) {
@@ -32,17 +32,32 @@ export async function getTodos() {
     return await res.json();
 }
 
+// todo 날짜별 조회
+// export async function getTodos(date) {
+//     const res = await fetch(`${api}/todo/${date}`, {
+//         method: 'GET',
+//         headers: {"Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).token}
+//     })
+
+//     if(!res.ok) {
+//         throw new Error(`${res.status} ${res.statusText}`)
+//     }
+
+//     return await res.json();
+// }
+
 // todo 수정
-export async function updateTodo(id, todo, isCompleted) {
+export async function updateTodo(id, date, content, checked) {
     const res = await fetch(`${api}/todos/${id}/update`, {
         method: "PUT",
         headers: {
-            "Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).access_token,
+            "Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).token,
             "Content-Type" : "application/json"
         },
         body: JSON.stringify({
-            todo,
-            isCompleted
+            date,
+            content,
+            checked
         })
     })
 
@@ -57,7 +72,7 @@ export async function updateTodo(id, todo, isCompleted) {
 export async function deleteTodo(id) {
     const res = await fetch(`${api}/todo/${id}/delete`, {
         method: "DELETE",
-        headers: {'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('user')).access_token}
+        headers: {'Authorization' : 'Bearer ' + JSON.parse(localStorage.getItem('user')).token}
     });
 
     if(!res.ok) {

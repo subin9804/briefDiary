@@ -10,6 +10,7 @@ public class TodoRequest {
 
     private String id;
 
+    @NotBlank
     private LocalDate date;
 
     private String user;
@@ -19,6 +20,5 @@ public class TodoRequest {
 
     @NotBlank
     private String content;
-
 
 }

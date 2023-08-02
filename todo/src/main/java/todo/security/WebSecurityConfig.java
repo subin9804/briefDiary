@@ -60,12 +60,25 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll().requestMatchers("/api/test/**")
                         .permitAll().anyRequest().authenticated());
 
+//        http.cors(httpSecurityCorsConfigurer -> {         //cors문제 해결
+//            httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());
+//        });
+
         http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
+
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("https://localhost:3000"));
+//        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 
 }
 

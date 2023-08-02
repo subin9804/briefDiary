@@ -3,11 +3,12 @@ package todo.controllers;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import todo.collections.Todo;
+import todo.filter.CORSFilter;
 import todo.payload.request.TodoRequest;
 import todo.payload.response.MessageResponse;
 import todo.payload.response.TodoResponse;
@@ -15,7 +16,6 @@ import todo.repository.TodoRepository;
 import todo.service.TodoService;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,6 +25,7 @@ public class TodoController {
 
     private final TodoService service;
     private final TodoRepository todoRepository;
+    private final CORSFilter filter;
 
     public Logger logger = LoggerFactory.getLogger(TodoController.class);
 
@@ -38,11 +39,24 @@ public class TodoController {
     }
 
     // todo 날짜별 조회하기
-    @GetMapping("/{date}")
-    public ResponseEntity<List<TodoResponse>> todo(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, Principal principal) {
-        String user = principal.getName();
+//    @GetMapping("/{date}")
+//    public ResponseEntity<List<TodoResponse>> todo(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, Principal principal) {
+//        String user = principal.getName();
+//
+//        List<TodoResponse> todos = todoRepository.findByUserAndDate(user, date)
+//                .stream()
+//                .map(TodoResponse::new)
+//                .toList();
+//
+//        return ResponseEntity.ok().body(todos);
+//    }
 
-        List<TodoResponse> todos = todoRepository.findByUserAndDate(user, date)
+    // todo 전체 조회하기
+    @GetMapping
+    public ResponseEntity<List<TodoResponse>> todoAll(Authentication authentication) {
+        String user = authentication.getName();
+
+        List<TodoResponse> todos = todoRepository.findByUser(user)
                 .stream()
                 .map(TodoResponse::new)
                 .toList();

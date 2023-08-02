@@ -16,7 +16,6 @@ public class TodoResponse {
     private boolean checked;
     private String content;
 
-
     public TodoResponse(Todo todo) {
         this.id = todo.getId();
         this.date = todo.getDate();

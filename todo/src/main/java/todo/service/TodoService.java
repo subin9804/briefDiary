@@ -27,7 +27,6 @@ public class TodoService {
     public Todo update(TodoRequest request, String id) {
         Todo todo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Not exsist todo"));
 
-        todo.setId(request.getId());
         todo.setDate(request.getDate());
         todo.setChecked(request.isChecked());
         todo.setContent(request.getContent());

@@ -11,7 +11,7 @@ public interface TodoRepository extends MongoRepository<Todo, String> {
 
     Optional<Todo> findById(String id);
 
-    List<Todo> findByUser (String user);
+    List<Todo> findByUser(String user);
 
     List<Todo> findByUserAndDate(String user, LocalDate date);
 

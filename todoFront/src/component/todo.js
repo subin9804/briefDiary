@@ -1,8 +1,10 @@
 import {useEffect, useState, useContext} from "react";
-import {getTodos, createTodo, deleteTodo} from "../request/todo"
+import {getTodosAll, createTodo, deleteTodo} from "../request/todo"
 import List from "./list";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
+import AddTodo from "./AddTodo";
+import DateGroup from "./DateGroup";
 
 export default function Todo() {
     
@@ -14,12 +16,14 @@ export default function Todo() {
     const {setUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
+
+
     useEffect(() => {
         setIsLoaded(false);
         setError(null);
         setTodo("")
 
-        getTodos().then(data => {
+        getTodosAll().then(data => {
             setTodolist(data);
         })
         .catch(error => {
@@ -28,6 +32,8 @@ export default function Todo() {
         })
         .finally(() => setIsLoaded(true))
     }, [todo])
+
+    console.log(todolist)
 
     // if (!isLoaded) {
     //     return <p>fetching data...</p>
@@ -62,55 +68,66 @@ export default function Todo() {
         }
     }
 
-    //console.log(todolist)
+    const dateListSet = new Set(todolist.map(item => item.date))
+    const dateList = [...dateListSet]
 
-    // todo 조회
-    const todoList = todolist.map(item => (
-        <List 
-            key={item.id}
-            id={item.id}
-            todo={item.todo}
-            isCompleted={item.isCompleted}
+    // 날짜리스트
+    function getTodos(date) {
+        const todos = todolist.filter(item => JSON.stringify(item.date) === JSON.stringify(date))
+        return todos;
+    }
+
+    const datelist = dateList.map(date => {
+        <List
+            date={date}
+            todos={getTodos(date)}
             todolist={todolist}
             setTodolist={setTodolist}
+            handleSubmit={handleSubmit}
             handledelete={handledelete}
         />
-    ))
+    })
+    
 
-    function signout () {
-        setUser(null);
-        localStorage.removeItem('user')
-        navigate('/signin')
-    }
+
+    // todo 조회
+    // const todoList = todolist.map(item => (
+    //     <List 
+    //         key={item.id}
+    //         id={item.id}
+    //         content={item.content}
+    //         date={item.date}
+    //         isChecked={item.checked}
+    //         
+    //     />
+    // ))
+
+
+
+    // function signout () {
+    //     setUser(null);
+    //     localStorage.removeItem('user')
+    //     navigate('/signin')
+    // }
 
     //console.log(todo)
     return (
-        <div className="w-96 p-4 mt-16 mx-auto text-center border border-green-400 border-2 px-8 pb-16 text-center relative">
+        <div className="max-w-sm h-screen p-4 my-16 mx-auto text-center border border-green-400 border-2 px-8 pb-16 text-center relative">
             <h1 className="font-bold text-2xl">TODOLIST</h1>
-            <form id="createTodo" onSubmit={handleSubmit} className="p-4 mx-auto">
-                <input 
-                    data-testid="new-todo-input" 
-                    className="border border-green-400 rounded-full px-2 w-2/3 outline-none"
-                    autoComplete="off"
-                    onChange={(e) => setNewTodo(e.target.value)}
-                    value={newTodo}
-                />
-                <button 
-                    data-testid="new-todo-add-button" 
-                    className="p-1 ml-2 bg-green-400 rounded-full"
-                >
-                    추가
-                </button>
-            </form>
-            <ul id="todoList">
-                {todoList}
-            </ul>
-            <button 
-                className="font-semibold text-green-600 absolute right-8 bottom-6"
+
+            <div id="todoList">
+                {datelist}
+            </div>
+            
+
+            <button type="button" className="absolute bottom-4 right-4 green-button"></button>
+
+            {/* <button 
+                className="font-semibold text-green-600 absolute right-8 bottom-6 padding-4"
                 onClick={signout}
             >
                 로그아웃
-            </button>
+            </button> */}
         </div>
     )
 }

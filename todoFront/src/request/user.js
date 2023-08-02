@@ -1,19 +1,18 @@
 import { api } from "./api";
 
 // 회원가입
-export async function signUp (username, password, roles) {
+export async function signUp (username, password) {
     const res = await fetch(`${api}/auth/signup`, {
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
             username,
-            password,
-            roles
+            password
         })
     });
 
     if(!res.ok) {
-        console.log(username, password, roles)
+        console.log(username, password)
         throw new Error(`${res.status} ${res.statusText}`)
     }
 
