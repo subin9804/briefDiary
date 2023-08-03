@@ -67,26 +67,37 @@ export default function Todo() {
             console.log(error)
         }
     }
-
-    const dateListSet = new Set(todolist.map(item => item.date))
-    const dateList = [...dateListSet]
-
+    
     // 날짜리스트
+    let dateList = new Set(todolist.map(item => {
+        let d = "";
+        d += item.date[0] + "-" + item.date[1] + "-" + item.date[2]
+        return d;
+    }))
+    dateList = [...dateList]
+
+    // date array를 string으로 바꾸는 함수
     function getTodos(date) {
-        const todos = todolist.filter(item => JSON.stringify(item.date) === JSON.stringify(date))
+        const todos = todolist.filter(item => {
+            let d = "";
+            d += item.date[0] + "-" + item.date[1] + "-" + item.date[2]
+            
+            if (d === date) return item;
+        })
         return todos;
     }
 
-    const datelist = dateList.map(date => {
-        <List
-            date={date}
-            todos={getTodos(date)}
-            todolist={todolist}
-            setTodolist={setTodolist}
-            handleSubmit={handleSubmit}
-            handledelete={handledelete}
-        />
-    })
+
+    // const datelist = dateList.map(date => {
+    //     <List
+    //         date={date}
+    //         todos={getTodos(date)}
+    //         todolist={todolist}
+    //         setTodolist={setTodolist}
+    //         handleSubmit={handleSubmit}
+    //         handledelete={handledelete}
+    //     />
+    // })
     
 
 
@@ -110,13 +121,22 @@ export default function Todo() {
     //     navigate('/signin')
     // }
 
-    //console.log(todo)
+
     return (
         <div className="max-w-sm h-screen p-4 my-16 mx-auto text-center border border-green-400 border-2 px-8 pb-16 text-center relative">
             <h1 className="font-bold text-2xl">TODOLIST</h1>
 
             <div id="todoList">
-                {datelist}
+                {dateList.map(date => (
+                    <List
+                        date={date}
+                        todos={getTodos(date)}
+                        todolist={todolist}
+                        setTodolist={setTodolist}
+                        handleSubmit={handleSubmit}
+                        handledelete={handledelete}
+                    />
+                ))}
             </div>
             
 

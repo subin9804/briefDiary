@@ -40,12 +40,12 @@ export default function List({date, todos, todolist, setTodolist, handledelete, 
 
    return (
     <>
+        <h2>{date}</h2>
         {todos.map(todo => (
-
-            <ul className="w-full bg-yellow-300" key={todo.date}>
-                <li className="text-left p-1 pl-8 flex justify-between border-b-2 border-green-400 border-dotted">
+            <ul className="w-full bg-yellow-300" key={todo.id}>
+                <li className="text-left p-1 pl-8 justify-between border-b-2 border-green-400 border-dotted">
                     <div className="leading-8">
-                        <input type="checkbox" defaultChecked={todo.checked} onClick={() => handleCheck(todo.id)} name={todo.id} id={todo.id} className="mr-2"/>
+                        <input type="checkbox" defaultChecked={todo.checked} onClick={() => handleCheck(todo.id)} name={todo.id} id={todo.id} className="mr-2 block"/>
                         {updating ? (
                             <input className="border w-1/3 rounded-full px-2 w-3/4 outline-none text-sm" defaultValue={todo.content} onChange={({target}) => setUpdateTodo(target.value)}/>
                             ) : (
