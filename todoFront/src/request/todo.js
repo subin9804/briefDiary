@@ -1,14 +1,14 @@
 import { api } from "./api";
 
 // todo 추가
-export async function createTodo(todo) {
-    const res = await fetch(`${api}/todos`, {
+export async function createTodo(date, content) {
+    const res = await fetch(`${api}/todo`, {
         method: "POST",
         headers: {
             "Authorization" : "Bearer " + JSON.parse(localStorage.getItem('user')).token,
             "Content-Type" : "application/json"
         },
-        body: JSON.stringify({todo})
+        body: JSON.stringify({date, content})
     })
 
     if(!res.ok) {

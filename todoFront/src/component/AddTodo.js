@@ -1,13 +1,7 @@
 import { useState } from "react"
 
 
-export default function AddTodo() {
-    const [newTodo, setNewTodo] = useState("");
-
-    function handleSubmit() {
-
-    }
-
+export default function AddTodo({handleSubimt, setIsCreating}) {
 
     return (
         <>

@@ -16,3 +16,28 @@
   padding-bottom: 10px;
   top: 0;
 }
+
+.memo {
+  width: 100%;
+  background-color: azure;
+  margin-top: 15px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid black;
+}
+
+.round-button {
+  border-radius: 100%;
+}
+
+#container::-webkit-scrollbar {
+  width: 8px;
+  
+  background-color: aliceblue;
+}
+#container::-webkit-scrollbar-thumb {  
+  border-radius: 20px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  background-color: rgb(94, 168, 110);
+}
